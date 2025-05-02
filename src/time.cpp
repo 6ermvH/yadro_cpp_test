@@ -24,7 +24,7 @@ bool Time::operator==(const Time& other) const {
 }
 
 bool Time::operator!=(const Time& other) const {
-  return !(*this == other);
+  return minute_ != other.minute_;
 }
 
 bool Time::operator<(const Time& other) const {
@@ -47,9 +47,15 @@ std::string Time::to_string() const {
   hour_t hour = minute_ / 60;
   minute_t minute = minute_ % 60;
   std::ostringstream ss;
+  if (hour < 10) {
+    ss << 0;
+  }
   ss << static_cast<int>(hour) 
-     << ":"
-     << static_cast<int>(minute);
+     << ":";
+  if (minute < 10) {
+    ss << 0;
+  }
+  ss << static_cast<int>(minute);
   return ss.str();
 }
 
@@ -59,5 +65,5 @@ hour_t Time::get_hour() const {
 }
 
 Time duration(const Time& start, const Time& end) {
-  return Time(end.minute_ - start.minute_);
+  return Time(0, end.minute_ - start.minute_);
 }
