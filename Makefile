@@ -33,6 +33,7 @@ $(OBJDIR)/%.test.o: $(TESTDIR)/%.cpp
 
 clean:
 	rm -rf $(OBJDIR) $(BINDIR)
+	rm -f $(MAIN_TARGET) $(TEST_TARGET)
 
 .PHONY: all clean
 
