@@ -8,21 +8,22 @@
 
 class ManagerPC {
 public:
+  explicit ManagerPC(std::size_t num_computers);
+  ~ManagerPC() = default;
+
+  void assign(std::size_t pc_id, user_id_t user_id);
+  void release(std::size_t pc_id);
+  std::size_t get_free_pc();
+  std::size_t count() const;
 
 private:
   struct PC {
-    user_id_t id;
-    bool is_used;
+    std::optional<user_id_t> id;
+
+    bool is_used() const;
   };
 
-  struct compare_PC {
-    bool operator()(const std::unique_ptr<PC>& lhs, const std::unique_ptr<PC>& rhs) const;
-  };
-
-  std::priority_queue<std::unique_ptr<PC>,
-                      std::vector<std::unique_ptr<PC>>,
-                      compare_PC> computers_;
-  std::vector<user_id_t> waiting_order_;
+  std::vector<PC> computers_;
 };
 
 #endif // !MANAGER_PC_HPP
