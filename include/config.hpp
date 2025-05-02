@@ -3,6 +3,7 @@
 
 #include <cstdint>
 
-using user_id_t = std::uint64_t
+using user_id_t = std::uint64_t;
+using hour_t = std::uint8_t;
 
 #endif // !CONFIG_HPP

@@ -8,7 +8,9 @@ public:
 
     void add(const std::string& username, user_id_t user_id);
     void wait(const std::string& username);
+    void unwait(const std::string& username);
     void remove(const std::string& username);
+    bool has_user(const std::string& username) const;
 
 private:
     std::unordered_map<std::string, user_id_t> user_map_;
