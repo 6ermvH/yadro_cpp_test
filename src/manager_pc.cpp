@@ -17,16 +17,15 @@ void ManagerPC::assign(std::size_t pc_id, user_id_t user_id, Time start_time) {
   ++used_pc_;
 }
 
-hour_t ManagerPC::release(std::size_t pc_id, Time end_time) {
-  if (!computers_[pc_id].is_used()) {
-    throw std::runtime_error("PC is not in use");
+hour_t ManagerPC::release(user_id_t user_id, Time end_time) {
+  for (std::size_t pc_id = 0; pc_id < computers_.size(); ++pc_id) {
+    auto& pc = computers_[pc_id];
+    if (pc.is_used() && pc.id == user_id) {
+      clean_pc(pc_id);
+      return duration(pc.start_time, end_time).get_hour();
+    }
   }
-
-  hour_t dur = duration(computers_[pc_id].start_time, end_time).get_hour();
-  computers_[pc_id].id.reset();
-  --used_pc_;
-
-  return dur;
+  throw std::runtime_error("ClientUnknown");
 }
 
 std::size_t ManagerPC::get_free_pc() {
@@ -40,4 +39,12 @@ std::size_t ManagerPC::get_free_pc() {
 
 bool ManagerPC::has_free_pc() const {
   return used_pc_ < computers_.size();
+}
+
+void ManagerPC::clean_pc(std::size_t pc_id) {
+  if (computers_[pc_id].is_used()) {
+    --used_pc_;
+  }
+  computers_[pc_id].start_time = Time();
+  computers_[pc_id].id.reset();
 }

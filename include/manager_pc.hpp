@@ -15,7 +15,7 @@ public:
   ~ManagerPC() = default;
 
   void assign(std::size_t pc_id, user_id_t user_id, Time start_time);
-  hour_t release(std::size_t pc_id, Time end_time); // return duration start - end
+  hour_t release(user_id_t user_id, Time end_time); // return duration start - end
   std::size_t get_free_pc();
   bool has_free_pc() const; // -> count() > used_pc_
 
@@ -29,6 +29,8 @@ private:
 
   std::vector<PC> computers_;
   std::size_t used_pc_;
+
+  void clean_pc(std::size_t pc_id);
 };
 
 #endif // !MANAGER_PC_HPP
