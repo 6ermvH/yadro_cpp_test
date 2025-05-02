@@ -3,6 +3,9 @@
 
 #include "config.hpp"
 
+using hour_t = std::uint8_t;
+using minute_t = std::uint32_t;
+
 class Time {
 public:
   explicit Time(const std::string& time_str, const std::string& format = "HH:MM");
