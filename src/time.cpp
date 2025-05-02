@@ -1,5 +1,10 @@
 #include "time.hpp"
 
+#include <stdexcept>
+#include <sstream>
+
+Time::Time(hour_t hour, minute_t minute) : minute_(minute + hour * 60) {}
+
 Time::Time(const std::string& time_str, const std::string& format) {
   if (format == "HH:MM") {
     std::istringstream ss(time_str);
@@ -48,4 +53,11 @@ std::string Time::to_string() const {
   return ss.str();
 }
 
+hour_t Time::get_hour() const {
+  return static_cast<hour_t>(minute_ / 60) + 
+         static_cast<hour_t>( (minute_ % 60) != 0 );
+}
 
+Time duration(const Time& start, const Time& end) {
+  return Time(end.minute_ - start.minute_);
+}
