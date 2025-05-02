@@ -3,6 +3,8 @@
 
 #include <queue>
 #include <vector>
+#include <optional>
+#include <stdexcept>
 
 #include "time.hpp"
 #include "config.hpp"

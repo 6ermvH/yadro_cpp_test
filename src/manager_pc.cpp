@@ -22,11 +22,11 @@ hour_t ManagerPC::release(std::size_t pc_id, Time end_time) {
     throw std::runtime_error("PC is not in use");
   }
 
-  hour_t duration = computers_[pc_id].start_time.get_duration(end_time);
+  hour_t dur = duration(computers_[pc_id].start_time, end_time).get_hour();
   computers_[pc_id].id.reset();
   --used_pc_;
 
-  return duration;
+  return dur;
 }
 
 std::size_t ManagerPC::get_free_pc() {
