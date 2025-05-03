@@ -59,7 +59,7 @@ TEST(TimeBase, operators) {
   EXPECT_FALSE(Time() != Time(0, 0));
   EXPECT_FALSE(Time("10:59") != Time(10, 59));
   // !=
-  
+
   // <
   EXPECT_TRUE(Time(1, 30) < Time(2, 30));
   EXPECT_TRUE(Time() < Time(0, 1));

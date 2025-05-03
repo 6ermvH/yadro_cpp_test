@@ -5,4 +5,4 @@
 
 using user_id_t = std::uint64_t;
 
-#endif // !CONFIG_HPP
+#endif  // !CONFIG_HPP

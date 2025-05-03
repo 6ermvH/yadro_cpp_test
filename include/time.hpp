@@ -1,17 +1,18 @@
 #ifndef TIME_HPP
 #define TIME_HPP
 
-#include "config.hpp"
-
 #include <string>
+
+#include "config.hpp"
 
 using hour_t = std::uint32_t;
 using minute_t = std::uint32_t;
 
 class Time {
-public:
+ public:
   Time(hour_t hour = 0, minute_t minute = 0);
-  explicit Time(const std::string& time_str, const std::string& format = "HH:MM");
+  explicit Time(const std::string& time_str,
+                const std::string& format = "HH:MM");
   Time(const Time& other) = default;
   Time& operator=(const Time& other) = default;
 
@@ -28,8 +29,8 @@ public:
 
   friend Time duration(const Time& start, const Time& end);
 
-private:
+ private:
   minute_t minute_;
 };
 
-#endif // !TIME_HPP
+#endif  // !TIME_HPP

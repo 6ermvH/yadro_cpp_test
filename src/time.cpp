@@ -1,7 +1,7 @@
 #include "time.hpp"
 
-#include <sstream>
 #include <limits>
+#include <sstream>
 
 Time::Time(hour_t hour, minute_t minute) : minute_(minute + hour * 60) {}
 
@@ -50,8 +50,7 @@ std::string Time::to_string() const {
   if (hour < 10) {
     ss << 0;
   }
-  ss << static_cast<int>(hour) 
-     << ":";
+  ss << static_cast<int>(hour) << ":";
   if (minute < 10) {
     ss << 0;
   }
@@ -60,8 +59,8 @@ std::string Time::to_string() const {
 }
 
 hour_t Time::get_hour() const {
-  return static_cast<hour_t>(minute_ / 60) + 
-         static_cast<hour_t>( (minute_ % 60) != 0 );
+  return static_cast<hour_t>(minute_ / 60) +
+         static_cast<hour_t>((minute_ % 60) != 0);
 }
 
 Time duration(const Time& start, const Time& end) {

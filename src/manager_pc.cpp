@@ -1,12 +1,11 @@
 #include "manager_pc.hpp"
+
 #include "errors.hpp"
 
 ManagerPC::ManagerPC(std::size_t num_computers)
     : computers_(num_computers), used_pc_(0) {}
 
-bool ManagerPC::PC::is_used() const {
-  return id.has_value();
-}
+bool ManagerPC::PC::is_used() const { return id.has_value(); }
 
 void ManagerPC::assign(std::size_t pc_id, user_id_t user_id, Time start_time) {
   if (computers_[pc_id].is_used()) {
@@ -39,9 +38,7 @@ std::size_t ManagerPC::get_free_pc() {
   throw ErrorClub(ErrorCode::PlaceIsBusy);
 }
 
-bool ManagerPC::has_free_pc() const {
-  return used_pc_ < computers_.size();
-}
+bool ManagerPC::has_free_pc() const { return used_pc_ < computers_.size(); }
 
 void ManagerPC::_clean_pc(std::size_t pc_id) {
   if (computers_[pc_id].is_used()) {

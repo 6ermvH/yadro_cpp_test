@@ -1,25 +1,26 @@
 #ifndef MANAGER_PC_HPP
 #define MANAGER_PC_HPP
 
-#include <queue>
-#include <vector>
 #include <optional>
+#include <queue>
 #include <stdexcept>
+#include <vector>
 
-#include "time.hpp"
 #include "config.hpp"
+#include "time.hpp"
 
 class ManagerPC {
-public:
+ public:
   explicit ManagerPC(std::size_t num_computers);
   ~ManagerPC() = default;
 
   void assign(std::size_t pc_id, user_id_t user_id, Time start_time);
-  hour_t release(user_id_t user_id, Time end_time); // return duration start - end
+  hour_t release(user_id_t user_id,
+                 Time end_time);  // return duration start - end
   std::size_t get_free_pc();
-  bool has_free_pc() const; // -> count() > used_pc_
+  bool has_free_pc() const;  // -> count() > used_pc_
 
-private:
+ private:
   struct PC {
     Time start_time;
     std::optional<user_id_t> id;
@@ -33,4 +34,4 @@ private:
   void _clean_pc(std::size_t pc_id);
 };
 
-#endif // !MANAGER_PC_HPP
+#endif  // !MANAGER_PC_HPP
