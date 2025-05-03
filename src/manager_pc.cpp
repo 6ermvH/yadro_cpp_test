@@ -1,4 +1,5 @@
 #include "manager_pc.hpp"
+#include "errors.hpp"
 
 ManagerPC::ManagerPC(std::size_t num_computers)
     : computers_(num_computers), used_pc_(0) {}
@@ -9,7 +10,7 @@ bool ManagerPC::PC::is_used() const {
 
 void ManagerPC::assign(std::size_t pc_id, user_id_t user_id, Time start_time) {
   if (computers_[pc_id].is_used()) {
-    throw std::runtime_error("PC is already in use");
+    throw ErrorClub(ErrorCode::PlaceIsBusy);
   }
 
   computers_[pc_id].start_time = start_time;
@@ -25,7 +26,7 @@ hour_t ManagerPC::release(user_id_t user_id, Time end_time) {
       return duration(pc.start_time, end_time).get_hour();
     }
   }
-  throw std::runtime_error("ClientUnknown");
+  throw ErrorClub(ErrorCode::ClientUnknown);
 }
 
 std::size_t ManagerPC::get_free_pc() {
@@ -34,7 +35,7 @@ std::size_t ManagerPC::get_free_pc() {
       return i;
     }
   }
-  throw std::runtime_error("No free PC available");
+  throw ErrorClub(ErrorCode::PlaceIsBusy);
 }
 
 bool ManagerPC::has_free_pc() const {
