@@ -1,7 +1,7 @@
 #include "time.hpp"
 
-#include <stdexcept>
 #include <sstream>
+#include <limits>
 
 Time::Time(hour_t hour, minute_t minute) : minute_(minute + hour * 60) {}
 
@@ -15,7 +15,7 @@ Time::Time(const std::string& time_str, const std::string& format) {
     minute_ = static_cast<minute_t>(std::stoi(minute_str));
     minute_ += hour * 60;
   } else {
-    throw std::invalid_argument("Unsupported format");
+    minute_ = std::numeric_limits<minute_t>::max();
   }
 }
 
