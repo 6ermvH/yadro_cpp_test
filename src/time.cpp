@@ -65,5 +65,8 @@ hour_t Time::get_hour() const {
 }
 
 Time duration(const Time& start, const Time& end) {
-  return Time(0, end.minute_ - start.minute_);
+  if (end >= start) {
+    return Time(0, end.minute_ - start.minute_);
+  }
+  return Time(0, start.minute_ - end.minute_);
 }
