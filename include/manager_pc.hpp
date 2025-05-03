@@ -30,7 +30,7 @@ private:
   std::vector<PC> computers_;
   std::size_t used_pc_;
 
-  void clean_pc(std::size_t pc_id);
+  void _clean_pc(std::size_t pc_id);
 };
 
 #endif // !MANAGER_PC_HPP
