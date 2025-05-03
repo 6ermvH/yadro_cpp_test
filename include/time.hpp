@@ -5,7 +5,7 @@
 
 #include <string>
 
-using hour_t = std::uint8_t;
+using hour_t = std::uint32_t;
 using minute_t = std::uint32_t;
 
 class Time {

@@ -86,6 +86,7 @@ TEST(TimeBase, get_hour) {
   EXPECT_EQ(Time(0, 0).get_hour(), 0);
   EXPECT_EQ(Time("10:59").get_hour(), 11);
   EXPECT_EQ(Time(23, 59).get_hour(), 24);
+  EXPECT_EQ(Time(1, 1).get_hour(), 2);
 }
 
 TEST(TimeBase, duration) {
@@ -93,6 +94,14 @@ TEST(TimeBase, duration) {
   EXPECT_EQ(duration(Time(), Time(1, 0)), Time(1, 0));
   EXPECT_EQ(duration(Time(), Time(1, 59)), Time(1, 59));
   EXPECT_EQ(duration(Time(10, 0), Time(11, 0)), Time(1, 0));
-  EXPECT_EQ(duration(Time(10, 0), Time(11, 30)), Time(1, 30));
+  EXPECT_EQ(duration(Time(10, 0), Time(11, 1)), Time(1, 1));
   EXPECT_EQ(duration(Time(10, 30), Time(10, 30)), Time());
+  EXPECT_EQ(duration(Time(11, 0), Time(10, 0)), Time(1, 0));
+  EXPECT_EQ(duration(Time(11, 1), Time(10, 0)), Time(1, 1));
+}
+
+TEST(TimeBase, Copy) {
+  Time t1(10, 0);
+  Time t2 = t1;
+  EXPECT_EQ(t2.to_string(), "10:00");
 }
