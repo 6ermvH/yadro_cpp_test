@@ -2,8 +2,8 @@
 
 #include "errors.hpp"
 
-ManagerPC::ManagerPC(std::size_t num_computers)
-    : computers_(num_computers), used_pc_(0) {}
+ManagerPC::ManagerPC(std::size_t num_computers, std::uint32_t price_per_hour)
+    : computers_(num_computers), price_per_hour_(price_per_hour), used_pc_(0) {}
 
 bool ManagerPC::PC::is_used() const { return id.has_value(); }
 
@@ -38,6 +38,13 @@ std::size_t ManagerPC::get_free_pc() {
   throw ErrorClub(ErrorCode::PlaceIsBusy);
 }
 
+std::pair<std::uint32_t, Time> ManagerPC::get_stats_pc(std::size_t pc_id) const {
+  if (pc_id >= computers_.size()) {
+    throw std::runtime_error("bad pc");
+  } 
+  return {computers_[pc_id].result_revenue, computers_[pc_id].result_tm};
+}
+
 bool ManagerPC::has_free_pc() const { return used_pc_ < computers_.size(); }
 
 void ManagerPC::_clean_pc(std::size_t pc_id) {
@@ -46,4 +53,8 @@ void ManagerPC::_clean_pc(std::size_t pc_id) {
   }
   computers_[pc_id].start_time = Time();
   computers_[pc_id].id.reset();
+}
+
+std::size_t ManagerPC::count_pc() const {
+  return computers_.size();
 }
