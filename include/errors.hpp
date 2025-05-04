@@ -9,7 +9,8 @@ enum class ErrorCode {
   NotOpenYet,
   PlaceIsBusy,
   ClientUnknown,
-  ClientCantWaitLonger
+  ClientCantWaitLonger,
+  FullWaitQueue
 };
 
 class ErrorClub : public std::exception {
@@ -28,6 +29,8 @@ class ErrorClub : public std::exception {
         return "Client unknown";
       case ErrorCode::ClientCantWaitLonger:
         return "Client can't wait longer";
+      case ErrorCode::FullWaitQueue:
+        return "Waiting order is full";
       default:
         return "Unknown error";
     }
