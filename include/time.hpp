@@ -11,7 +11,7 @@ using minute_t = std::uint32_t;
 class Time {
  public:
   Time(hour_t hour = 0, minute_t minute = 0);
-  explicit Time(const std::string& time_str,
+  Time(const std::string& time_str,
                 const std::string& format = "HH:MM");
   Time(const Time& other) = default;
   Time& operator=(const Time& other) = default;
@@ -22,6 +22,10 @@ class Time {
   bool operator<=(const Time& other) const;
   bool operator>(const Time& other) const;
   bool operator>=(const Time& other) const;
+
+  friend Time operator+(Time lhs, Time rhs);
+
+  Time& operator+=(Time tm);
 
   std::string to_string() const;
 

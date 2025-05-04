@@ -69,3 +69,13 @@ Time duration(const Time& start, const Time& end) {
   }
   return Time(0, start.minute_ - end.minute_);
 }
+
+Time operator+(Time lhs, Time rhs) {
+  return Time(0, lhs.minute_ + rhs.minute_);
+}
+
+Time& Time::operator+=(Time tm) {
+  minute_ += tm.minute_;
+  return *this;
+}
+
