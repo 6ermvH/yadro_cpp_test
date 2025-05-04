@@ -82,7 +82,14 @@ int main(int argc, char* argv[]) {
     std::cout << *ev << '\n';
   }
   
-  std::cout << end.to_string();
+  std::cout << end.to_string() << '\n';
+
+  auto revenue = club->get_revenue();
+  for (std::size_t i = 0; i < revenue.size(); ++i) {
+    std::cout << i + 1 << ' '
+              << revenue[i].first << ' '
+              << revenue[i].second.to_string() << '\n';
+  }
 
 }
 
