@@ -1,16 +1,16 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
 #include <algorithm>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 
 #include "club.hpp"
 #include "event.hpp"
 
-std::vector<std::string> parse_file(std::ifstream& ifs);
-std::string bad_string(const std::vector<std::string>& lines);
-std::shared_ptr<Club> parse_club(const std::vector<std::string>& lines);
+auto parse_file(std::ifstream& ifs) -> std::vector<std::string>;
+auto bad_string(const std::vector<std::string>& lines) -> std::string;
+auto parse_club(const std::vector<std::string>& lines) -> std::shared_ptr<Club>;
 
-int main(int argc, char* argv[]) {
+auto main(int argc, char* argv[]) -> int {
   if (argc < 2) {
     std::cerr << "Bad arguments";
     return 1;
@@ -22,15 +22,17 @@ int main(int argc, char* argv[]) {
   }
   auto lines = parse_file(file);
   std::string bad = bad_string(lines);
-  if (bad != "") {
+  if (!bad.empty()) {
     std::cerr << bad;
     return 1;
   }
 
   std::istringstream ss(lines[1]);
-  std::string start_str, end_str;
+  std::string start_str;
+  std::string end_str;
   ss >> start_str >> end_str;
-  utils::Time start(start_str), end(end_str);
+  utils::Time start(start_str);
+  utils::Time end(end_str);
 
   std::cout << start.to_string() << '\n';
 
@@ -53,7 +55,8 @@ int main(int argc, char* argv[]) {
         std::size_t pc_id;
         ss >> pc_id;
         --pc_id;
-        events.push_back(std::make_unique<ClientUsePC>(club, t, id, name, pc_id));
+        events.push_back(
+            std::make_unique<ClientUsePC>(club, t, id, name, pc_id));
         break;
       case 3:
         events.push_back(std::make_unique<ClientWait>(club, t, id, name));
@@ -75,34 +78,34 @@ int main(int argc, char* argv[]) {
   }
 
   auto users = club->get_users();
-  std::sort(users.begin(), users.end());
+  std::ranges::sort(users);
   for (auto& username : users) {
     auto ev = std::make_unique<ClientLeave>(club, end, 11, username);
     ev->handle();
     std::cout << *ev << '\n';
   }
-  
+
   std::cout << end.to_string() << '\n';
 
   auto revenue = club->get_revenue();
   for (std::size_t i = 0; i < revenue.size(); ++i) {
-    std::cout << i + 1 << ' '
-              << revenue[i].first << ' '
+    std::cout << i + 1 << ' ' << revenue[i].first << ' '
               << revenue[i].second.to_string() << '\n';
   }
-
 }
 
-std::vector<std::string> parse_file(std::ifstream& ifs) {
+auto parse_file(std::ifstream& ifs) -> std::vector<std::string> {
   std::vector<std::string> lines;
   std::string line;
   while (std::getline(ifs, line)) {
-    if (!line.empty()) lines.push_back(line);
+    if (!line.empty()) {
+      lines.push_back(line);
+    }
   }
   return lines;
 }
 
-std::string bad_string(const std::vector<std::string>& lines) {
+auto bad_string(const std::vector<std::string>& lines) -> std::string {
   if (lines.size() < 3) {
     return lines.empty() ? "" : lines[0];
   }
@@ -118,7 +121,9 @@ std::string bad_string(const std::vector<std::string>& lines) {
 
   {
     std::istringstream ss(lines[1]);
-    std::string open_str, close_str, extra;
+    std::string open_str;
+    std::string close_str;
+    std::string extra;
     ss >> open_str >> close_str;
     if (open_str.size() != 5 || close_str.size() != 5 || (ss >> extra)) {
       return lines[1];
@@ -140,7 +145,7 @@ std::string bad_string(const std::vector<std::string>& lines) {
     }
   }
 
-   for (std::size_t i = 3; i < lines.size(); ++i) {
+  for (std::size_t i = 3; i < lines.size(); ++i) {
     std::istringstream ss(lines[i]);
     std::string time_str;
     int id;
@@ -182,7 +187,8 @@ std::string bad_string(const std::vector<std::string>& lines) {
 
   return "";
 }
-std::shared_ptr<Club> parse_club(const std::vector<std::string>& lines) {
+auto parse_club(const std::vector<std::string>& lines)
+    -> std::shared_ptr<Club> {
   std::size_t pc_count = std::stoul(lines[0]);
   utils::Time open(lines[1].substr(0, 5));
   utils::Time close(lines[1].substr(6, 5));

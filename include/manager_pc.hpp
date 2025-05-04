@@ -15,12 +15,11 @@ class ManagerPC {
   ~ManagerPC() = default;
 
   void assign(std::size_t pc_id, user_id_t user_id, utils::Time start_time);
-  void release(user_id_t user_id,
-                 utils::Time end_time);
+  void release(user_id_t user_id, utils::Time end_time);
   std::size_t get_free_pc() const;
   bool has_free_pc() const;  // -> count() > used_pc_
   std::size_t count_pc() const;
-  
+
   std::pair<std::uint32_t, utils::Time> get_stats_pc(std::size_t pc_id) const;
 
  private:

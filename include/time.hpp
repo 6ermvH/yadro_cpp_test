@@ -13,8 +13,7 @@ using minute_t = std::uint32_t;
 class Time {
  public:
   Time(hour_t hour = 0, minute_t minute = 0);
-  Time(const std::string& time_str,
-                const std::string& format = "HH:MM");
+  Time(const std::string& time_str, const std::string& format = "HH:MM");
   Time(const Time& other) = default;
   Time& operator=(const Time& other) = default;
 
@@ -39,6 +38,6 @@ class Time {
   minute_t minute_;
 };
 
-}
+}  // namespace utils
 
 #endif  // !TIME_HPP

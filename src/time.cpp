@@ -5,15 +5,16 @@
 
 namespace utils {
 
-Time::Time(hour_t hour, minute_t minute) : minute_(minute + hour * 60) {}
+Time::Time(hour_t hour, minute_t minute) : minute_(minute + (hour * 60)) {}
 
 Time::Time(const std::string& time_str, const std::string& format) {
   if (format == "HH:MM") {
     std::istringstream ss(time_str);
-    std::string hour_str, minute_str;
+    std::string hour_str;
+    std::string minute_str;
     std::getline(ss, hour_str, ':');
     std::getline(ss, minute_str, ':');
-    hour_t hour = static_cast<hour_t>(std::stoi(hour_str));
+    auto hour = static_cast<hour_t>(std::stoi(hour_str));
     minute_ = static_cast<minute_t>(std::stoi(minute_str));
     minute_ += hour * 60;
   } else {
@@ -21,31 +22,31 @@ Time::Time(const std::string& time_str, const std::string& format) {
   }
 }
 
-bool Time::operator==(const Time& other) const {
+auto Time::operator==(const Time& other) const -> bool {
   return minute_ == other.minute_;
 }
 
-bool Time::operator!=(const Time& other) const {
+auto Time::operator!=(const Time& other) const -> bool {
   return minute_ != other.minute_;
 }
 
-bool Time::operator<(const Time& other) const {
+auto Time::operator<(const Time& other) const -> bool {
   return minute_ < other.minute_;
 }
 
-bool Time::operator<=(const Time& other) const {
+auto Time::operator<=(const Time& other) const -> bool {
   return minute_ <= other.minute_;
 }
 
-bool Time::operator>(const Time& other) const {
+auto Time::operator>(const Time& other) const -> bool {
   return minute_ > other.minute_;
 }
 
-bool Time::operator>=(const Time& other) const {
+auto Time::operator>=(const Time& other) const -> bool {
   return minute_ >= other.minute_;
 }
 
-std::string Time::to_string() const {
+auto Time::to_string() const -> std::string {
   hour_t hour = minute_ / 60;
   minute_t minute = minute_ % 60;
   std::ostringstream ss;
@@ -60,25 +61,25 @@ std::string Time::to_string() const {
   return ss.str();
 }
 
-hour_t Time::get_hour() const {
+auto Time::get_hour() const -> hour_t {
   return static_cast<hour_t>(minute_ / 60) +
          static_cast<hour_t>((minute_ % 60) != 0);
 }
 
-Time duration(const Time& start, const Time& end) {
+auto duration(const Time& start, const Time& end) -> Time {
   if (end >= start) {
-    return Time(0, end.minute_ - start.minute_);
+    return {0, end.minute_ - start.minute_};
   }
-  return Time(0, start.minute_ - end.minute_);
+  return {0, start.minute_ - end.minute_};
 }
 
-Time operator+(Time lhs, Time rhs) {
-  return Time(0, lhs.minute_ + rhs.minute_);
+auto operator+(Time lhs, Time rhs) -> Time {
+  return {0, lhs.minute_ + rhs.minute_};
 }
 
-Time& Time::operator+=(Time tm) {
+auto Time::operator+=(Time tm) -> Time& {
   minute_ += tm.minute_;
   return *this;
 }
 
-}
+}  // namespace utils

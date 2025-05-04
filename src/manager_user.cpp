@@ -25,11 +25,11 @@ void ManagerUser::remove(const std::string& username) {
   user_map_.erase(username);
 }
 
-bool ManagerUser::has_user(const std::string& username) const {
+auto ManagerUser::has_user(const std::string& username) const -> bool {
   return user_map_.find(username) != user_map_.end();
 }
 
-user_id_t ManagerUser::get_user_id(const std::string& username) const {
+auto ManagerUser::get_user_id(const std::string& username) const -> user_id_t {
   auto it = user_map_.find(username);
   if (it == user_map_.end()) {
     throw ErrorClub(ErrorCode::ClientUnknown);
@@ -37,7 +37,7 @@ user_id_t ManagerUser::get_user_id(const std::string& username) const {
   return it->second;
 }
 
-std::string ManagerUser::get_user_name(user_id_t user_id) const {
+auto ManagerUser::get_user_name(user_id_t user_id) const -> std::string {
   for (const auto& pair : user_map_) {
     if (pair.second == user_id) {
       return pair.first;
@@ -46,11 +46,11 @@ std::string ManagerUser::get_user_name(user_id_t user_id) const {
   throw ErrorClub(ErrorCode::ClientUnknown);
 }
 
-std::size_t ManagerUser::count_waited() const {
+auto ManagerUser::count_waited() const -> std::size_t {
   return waiting_group_.size();
 }
 
-user_id_t ManagerUser::get_waited_user() const {
+auto ManagerUser::get_waited_user() const -> user_id_t {
   if (waiting_group_.empty()) {
     throw ErrorClub(ErrorCode::EmptyWaitQueue);
   }
@@ -64,7 +64,7 @@ void ManagerUser::pop_waited_user() {
   waiting_group_.pop_front();
 }
 
-std::vector<std::string> ManagerUser::get_users() const {
+auto ManagerUser::get_users() const -> std::vector<std::string> {
   std::vector<std::string> users;
   for (const auto& pair : user_map_) {
     users.push_back(pair.first);
