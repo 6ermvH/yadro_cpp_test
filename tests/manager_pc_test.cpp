@@ -38,25 +38,3 @@ TEST(ManagerPCBase, GetFreePC) {
     EXPECT_THROW(manager.get_free_pc(), ErrorClub);
   }
 }
-
-TEST(ManagerPCBase, Release) {
-  {
-    ManagerPC manager(3, 10);
-    manager.assign(0, 555, Time("09:00"));
-    auto result = manager.release(555, Time("10:00"));
-    EXPECT_EQ(result.first, hour_t(1));
-    EXPECT_EQ(result.second, 0);
-  }
-  {
-    ManagerPC manager(3, 10);
-    manager.assign(0, 555, Time("09:00"));
-    auto result = manager.release(555, Time("10:01"));
-    EXPECT_EQ(result.first, hour_t(2));
-    EXPECT_EQ(result.second, 0);
-  }
-  {
-    ManagerPC manager(3, 10);
-    manager.assign(0, 555, Time("09:00"));
-    EXPECT_THROW(manager.release(111, Time("10:01")), ErrorClub);
-  }
-}

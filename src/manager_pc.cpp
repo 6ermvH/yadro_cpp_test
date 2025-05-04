@@ -8,6 +8,9 @@ ManagerPC::ManagerPC(std::size_t num_computers, std::uint32_t price_per_hour)
 bool ManagerPC::PC::is_used() const { return id.has_value(); }
 
 void ManagerPC::assign(std::size_t pc_id, user_id_t user_id, Time start_time) {
+  if (pc_id >= computers_.size()) {
+    throw std::runtime_error("bad pc");
+  }
   if (computers_[pc_id].is_used()) {
     throw ErrorClub(ErrorCode::PlaceIsBusy);
   }
@@ -17,13 +20,14 @@ void ManagerPC::assign(std::size_t pc_id, user_id_t user_id, Time start_time) {
   ++used_pc_;
 }
 
-std::pair<hour_t, std::size_t> ManagerPC::release(user_id_t user_id, Time end_time) {
+void ManagerPC::release(user_id_t user_id, Time end_time) {
   for (std::size_t pc_id = 0; pc_id < computers_.size(); ++pc_id) {
     auto& pc = computers_[pc_id];
     if (pc.is_used() && pc.id == user_id) {
-      hour_t result = duration(pc.start_time, end_time).get_hour();
+      hour_t hours = duration(pc.start_time, end_time).get_hour();
+      pc.result_revenue += hours * price_per_hour_;
+      pc.result_tm += duration(pc.start_time, end_time);
       _clean_pc(pc_id);
-      return {result, pc_id};
     }
   }
   throw ErrorClub(ErrorCode::ClientUnknown);
