@@ -37,20 +37,29 @@ user_id_t ManagerUser::get_user_id(const std::string& username) const {
   return it->second;
 }
 
+std::string ManagerUser::get_user_name(user_id_t user_id) const {
+  for (const auto& pair : user_map_) {
+    if (pair.second == user_id) {
+      return pair.first;
+    }
+  }
+  throw ErrorClub(ErrorCode::ClientUnknown);
+}
+
 std::size_t ManagerUser::count_waited() const {
   return waiting_group_.size();
 }
 
 user_id_t ManagerUser::get_waited_user() const {
   if (waiting_group_.empty()) {
-    throw ErrorClub(ErrorCode::ClientUnknown);
+    throw ErrorClub(ErrorCode::EmptyWaitQueue);
   }
   return waiting_group_.front();
 }
 
 void ManagerUser::pop_waited_user() {
   if (waiting_group_.empty()) {
-    throw ErrorClub(ErrorCode::ClientUnknown);
+    throw ErrorClub(ErrorCode::EmptyWaitQueue);
   }
   waiting_group_.pop_front();
 }

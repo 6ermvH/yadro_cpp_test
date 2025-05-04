@@ -17,6 +17,7 @@ class ManagerUser {
   void remove(const std::string& username);
   bool has_user(const std::string& username) const;
   std::size_t count_waited() const;
+  std::string get_user_name(user_id_t user_id) const;
   user_id_t get_user_id(const std::string& username) const;
   user_id_t get_waited_user() const;
   void pop_waited_user();

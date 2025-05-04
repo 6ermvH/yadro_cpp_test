@@ -90,3 +90,18 @@ TEST(ManagerUserBase, Complex) {
     EXPECT_THROW(manager.get_waited_user(), ErrorClub);
   }
 }
+
+TEST(ManagerUserBase, GetUserName) {
+  ManagerUser manager;
+  manager.add("German", 123);
+  manager.add("Anthon", 456);
+  EXPECT_EQ(manager.get_user_name(123), "German");
+  EXPECT_EQ(manager.get_user_name(456), "Anthon");
+  EXPECT_THROW(manager.get_user_name(789), ErrorClub);
+}
+
+TEST(ManagerUserBase, GetUserIdThrows) {
+  ManagerUser manager;
+  EXPECT_THROW(manager.get_user_id("Ghost"), ErrorClub);
+}
+
