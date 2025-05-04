@@ -12,6 +12,7 @@ TEST(ManagerUserBase, Add) {
     EXPECT_TRUE(manager.has_user("German"));
     EXPECT_FALSE(manager.has_user("Anthon"));
     EXPECT_FALSE(manager.has_user("german"));
+    EXPECT_EQ(manager.get_user_id("German"), 123);
   }
   {
     ManagerUser manager;
@@ -43,6 +44,7 @@ TEST(ManagerUserBase, Wait) {
     manager.add("German", 123);
     manager.wait("German");
     EXPECT_EQ(manager.get_waited_user(), 123);
+    EXPECT_EQ(manager.count_waited(), 1);
     EXPECT_NO_THROW(manager.pop_waited_user());
   }
   {
@@ -51,6 +53,7 @@ TEST(ManagerUserBase, Wait) {
     manager.add("Anthon", 111);
     manager.wait("German");
     manager.wait("Anthon");
+    EXPECT_EQ(manager.count_waited(), 2);
     EXPECT_EQ(manager.get_waited_user(), 123);
     EXPECT_NO_THROW(manager.pop_waited_user());
     EXPECT_EQ(manager.get_waited_user(), 111);
