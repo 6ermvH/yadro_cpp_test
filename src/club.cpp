@@ -75,3 +75,7 @@ void Club::remove_user(Time time, const std::string& username) {
   manager_user_.remove(username);
   revenue_[result.second] += result.first * price_per_hour_;
 }
+
+const std::vector<std::uint32_t>& Club::get_revenue() const {
+  return revenue_;
+}

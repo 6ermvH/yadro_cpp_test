@@ -16,6 +16,8 @@ public:
   void add_user_wait(Time time, const std::string& username);
   void remove_user(Time time, const std::string& username);
 
+  const std::vector<std::uint32_t>& get_revenue() const;
+
 private:
   Time start_;
   Time end_;
