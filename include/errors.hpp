@@ -21,15 +21,15 @@ class ErrorClub : public std::exception {
   const char* what() const noexcept override {
     switch (code_) {
       case ErrorCode::ClientShallNotPass:
-        return "Client shall not pass";
+        return "YouShallNotPass";
       case ErrorCode::NotOpenYet:
-        return "Not open yet";
+        return "NotOpenYet";
       case ErrorCode::PlaceIsBusy:
-        return "Place is busy";
+        return "PlaceIsBusy";
       case ErrorCode::ClientUnknown:
-        return "Client unknown";
+        return "ClientUnknown";
       case ErrorCode::ClientCantWaitLonger:
-        return "Client can't wait longer";
+        return "ICanWaitNoLonger!";
       case ErrorCode::FullWaitQueue:
         return "Waiting order is full";
       case ErrorCode::EmptyWaitQueue:
