@@ -43,14 +43,16 @@ TEST(ManagerPCBase, Release) {
   {
     ManagerPC manager(3);
     manager.assign(0, 555, Time("09:00"));
-    hour_t hours = manager.release(555, Time("10:00"));
-    EXPECT_EQ(hours, hour_t(1));
+    auto result = manager.release(555, Time("10:00"));
+    EXPECT_EQ(result.first, hour_t(1));
+    EXPECT_EQ(result.second, 0);
   }
   {
     ManagerPC manager(3);
     manager.assign(0, 555, Time("09:00"));
-    hour_t hours = manager.release(555, Time("10:01"));
-    EXPECT_EQ(hours, hour_t(2));
+    auto result = manager.release(555, Time("10:01"));
+    EXPECT_EQ(result.first, hour_t(2));
+    EXPECT_EQ(result.second, 0);
   }
   {
     ManagerPC manager(3);

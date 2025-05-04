@@ -17,13 +17,13 @@ void ManagerPC::assign(std::size_t pc_id, user_id_t user_id, Time start_time) {
   ++used_pc_;
 }
 
-hour_t ManagerPC::release(user_id_t user_id, Time end_time) {
+std::pair<hour_t, std::size_t> ManagerPC::release(user_id_t user_id, Time end_time) {
   for (std::size_t pc_id = 0; pc_id < computers_.size(); ++pc_id) {
     auto& pc = computers_[pc_id];
     if (pc.is_used() && pc.id == user_id) {
       hour_t result = duration(pc.start_time, end_time).get_hour();
       _clean_pc(pc_id);
-      return result;
+      return {result, pc_id};
     }
   }
   throw ErrorClub(ErrorCode::ClientUnknown);
