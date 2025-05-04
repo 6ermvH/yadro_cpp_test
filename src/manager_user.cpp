@@ -63,3 +63,11 @@ void ManagerUser::pop_waited_user() {
   }
   waiting_group_.pop_front();
 }
+
+std::vector<std::string> ManagerUser::get_users() const {
+  std::vector<std::string> users;
+  for (const auto& pair : user_map_) {
+    users.push_back(pair.first);
+  }
+  return users;
+}

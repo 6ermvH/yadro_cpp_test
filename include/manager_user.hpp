@@ -4,6 +4,7 @@
 #include <list>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "config.hpp"
 
@@ -20,6 +21,7 @@ class ManagerUser {
   std::string get_user_name(user_id_t user_id) const;
   user_id_t get_user_id(const std::string& username) const;
   user_id_t get_waited_user() const;
+  std::vector<std::string> get_users() const;
   void pop_waited_user();
 
  private:
