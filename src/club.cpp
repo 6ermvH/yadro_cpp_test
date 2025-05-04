@@ -100,3 +100,7 @@ std::size_t Club::get_free_pc() const {
 bool Club::has_free_pc() const {
   return manager_pc_.has_free_pc();
 }
+
+std::vector<std::string> Club::get_users() const {
+  return manager_user_.get_users();
+}

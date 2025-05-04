@@ -23,6 +23,8 @@ public:
   bool has_free_pc() const;
   std::size_t get_free_pc() const;
 
+  std::vector<std::string> get_users() const;
+
   const std::vector<std::pair<std::uint32_t, utils::Time> > get_revenue() const;
 
 private:
