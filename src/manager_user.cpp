@@ -37,6 +37,10 @@ user_id_t ManagerUser::get_user_id(const std::string& username) const {
   return it->second;
 }
 
+std::size_t ManagerUser::count_waited() const {
+  return waiting_group_.size();
+}
+
 user_id_t ManagerUser::get_waited_user() const {
   if (waiting_group_.empty()) {
     throw ErrorClub(ErrorCode::ClientUnknown);
