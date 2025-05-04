@@ -28,12 +28,13 @@ void ManagerPC::release(user_id_t user_id, Time end_time) {
       pc.result_revenue += hours * price_per_hour_;
       pc.result_tm += duration(pc.start_time, end_time);
       _clean_pc(pc_id);
+      return;
     }
   }
   throw ErrorClub(ErrorCode::ClientUnknown);
 }
 
-std::size_t ManagerPC::get_free_pc() {
+std::size_t ManagerPC::get_free_pc() const {
   for (std::size_t i = 0; i < computers_.size(); ++i) {
     if (!computers_[i].is_used()) {
       return i;

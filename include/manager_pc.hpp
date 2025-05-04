@@ -17,7 +17,7 @@ class ManagerPC {
   void assign(std::size_t pc_id, user_id_t user_id, Time start_time);
   void release(user_id_t user_id,
                  Time end_time);
-  std::size_t get_free_pc();
+  std::size_t get_free_pc() const;
   bool has_free_pc() const;  // -> count() > used_pc_
   std::size_t count_pc() const;
   
