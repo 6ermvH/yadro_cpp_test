@@ -63,7 +63,7 @@ void ClientUsePC::print(std::ostream& os) const {
   os << time_point_.to_string() << ' '
      << id_ << ' '
      << name_ << ' '
-     << pc_id_;
+     << pc_id_ + 1;
 }
 
 // ClientUsePC
