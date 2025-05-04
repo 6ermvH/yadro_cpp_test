@@ -29,6 +29,14 @@ bool ManagerUser::has_user(const std::string& username) const {
   return user_map_.find(username) != user_map_.end();
 }
 
+user_id_t ManagerUser::get_user_id(const std::string& username) const {
+  auto it = user_map_.find(username);
+  if (it == user_map_.end()) {
+    throw ErrorClub(ErrorCode::ClientUnknown);
+  }
+  return it->second;
+}
+
 user_id_t ManagerUser::get_waited_user() const {
   if (waiting_group_.empty()) {
     throw ErrorClub(ErrorCode::ClientUnknown);
