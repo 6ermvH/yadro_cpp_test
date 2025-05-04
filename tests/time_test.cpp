@@ -105,3 +105,27 @@ TEST(TimeBase, Copy) {
   Time t2 = t1;
   EXPECT_EQ(t2.to_string(), "10:00");
 }
+
+TEST(TimeBase, Addition) {
+  Time t1(1, 30);
+  Time t2(0, 45);
+  Time sum = t1 + t2;
+  EXPECT_EQ(sum.to_string(), "02:15");
+
+  t1 += Time(0, 30);
+  EXPECT_EQ(t1.to_string(), "02:00");
+
+  Time t3("01:15");
+  t3 += Time(1, 46);
+  EXPECT_EQ(t3.to_string(), "03:01");
+}
+
+TEST(TimeBase, InvalidFormat) {
+  EXPECT_THROW(Time("invalid"), std::exception);
+}
+
+TEST(TimeBase, MinutesOverflow) {
+  Time t(1, 75);
+  EXPECT_EQ(t.to_string(), "02:15");
+}
+
