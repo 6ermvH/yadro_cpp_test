@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+using namespace utils;
+
 TEST(TimeBase, Construct) {
   {
     Time t;

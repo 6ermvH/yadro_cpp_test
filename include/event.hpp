@@ -10,7 +10,7 @@
 
 class Event {
  public:
-  Event(std::shared_ptr<Club>, Time, std::size_t, const std::string&);
+  Event(std::shared_ptr<Club>, utils::Time, std::size_t, const std::string&);
   virtual ~Event() = default;
 
   virtual std::unique_ptr<Event> handle() const = 0;
@@ -19,21 +19,21 @@ class Event {
 
  protected:
   std::shared_ptr<Club> club_;
-  Time time_point_;
+  utils::Time time_point_;
   std::size_t id_;
   std::string name_;
 };
 
 class ClientComeIn : public Event {
  public:
-  ClientComeIn(std::shared_ptr<Club>, Time, std::size_t, const std::string&);
+  ClientComeIn(std::shared_ptr<Club>, utils::Time, std::size_t, const std::string&);
   std::unique_ptr<Event> handle() const override;
   void print(std::ostream&) const override;
 };
 
 class ClientUsePC : public Event {
  public:
-  ClientUsePC(std::shared_ptr<Club>, Time, std::size_t, const std::string&,
+  ClientUsePC(std::shared_ptr<Club>, utils::Time, std::size_t, const std::string&,
               std::size_t);
   std::unique_ptr<Event> handle() const override;
   void print(std::ostream&) const override;
@@ -44,21 +44,21 @@ class ClientUsePC : public Event {
 
 class ClientWait : public Event {
  public:
-  ClientWait(std::shared_ptr<Club>, Time, std::size_t, const std::string&);
+  ClientWait(std::shared_ptr<Club>, utils::Time, std::size_t, const std::string&);
   std::unique_ptr<Event> handle() const override;
   void print(std::ostream&) const override;
 };
 
 class ClientLeave : public Event {
  public:
-  ClientLeave(std::shared_ptr<Club>, Time, std::size_t, const std::string&);
+  ClientLeave(std::shared_ptr<Club>, utils::Time, std::size_t, const std::string&);
   std::unique_ptr<Event> handle() const override;
   void print(std::ostream&) const override;
 };
 
 class ErrorEvent : public Event {
  public:
-  ErrorEvent(std::shared_ptr<Club>, Time, std::size_t, const std::string&);
+  ErrorEvent(std::shared_ptr<Club>, utils::Time, std::size_t, const std::string&);
   std::unique_ptr<Event> handle() const override;
   void print(std::ostream&) const override;
 };

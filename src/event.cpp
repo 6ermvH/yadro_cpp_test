@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-Event::Event(std::shared_ptr<Club> club, Time time, std::size_t id, const std::string& name)
+Event::Event(std::shared_ptr<Club> club, utils::Time time, std::size_t id, const std::string& name)
   : club_(club), time_point_(time), id_(id), name_(name) {}
 
 std::ostream& operator<<(std::ostream& os, const Event& ev) {
@@ -15,7 +15,7 @@ std::ostream& operator<<(std::ostream& os, const Event& ev) {
 
 // ClientComeIn
 
-ClientComeIn::ClientComeIn(std::shared_ptr<Club> club, Time time, 
+ClientComeIn::ClientComeIn(std::shared_ptr<Club> club, utils::Time time, 
     std::size_t id, const std::string& name)
     : Event(club, time, id, name) {}
 
@@ -42,7 +42,7 @@ void ClientComeIn::print(std::ostream& os) const {
 
 // ClientUsePC
 
-ClientUsePC::ClientUsePC(std::shared_ptr<Club> club, Time time,
+ClientUsePC::ClientUsePC(std::shared_ptr<Club> club, utils::Time time,
     std::size_t id, const std::string& name, std::size_t pc_id)
     : Event(club, time, id, name), pc_id_(pc_id) {}
 
@@ -70,7 +70,7 @@ void ClientUsePC::print(std::ostream& os) const {
 
 // ClientWait
 
-ClientWait::ClientWait(std::shared_ptr<Club> club, Time time,
+ClientWait::ClientWait(std::shared_ptr<Club> club, utils::Time time,
     std::size_t id, const std::string& name)
     : Event(club, time, id, name) {}
 
@@ -97,7 +97,7 @@ void ClientWait::print(std::ostream& os) const {
 
 // ClientLeave
 
-ClientLeave::ClientLeave(std::shared_ptr<Club> club, Time time,
+ClientLeave::ClientLeave(std::shared_ptr<Club> club, utils::Time time,
     std::size_t id, const std::string& name)
     : Event(club, time, id, name) {}
 
@@ -127,7 +127,7 @@ void ClientLeave::print(std::ostream& os) const {
 
 // ErrorEvent
 
-ErrorEvent::ErrorEvent(std::shared_ptr<Club> club, Time time,
+ErrorEvent::ErrorEvent(std::shared_ptr<Club> club, utils::Time time,
     std::size_t id, const std::string& error_text)
     : Event(club, time, id, error_text) {}
 

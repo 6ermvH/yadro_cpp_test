@@ -7,7 +7,7 @@ ManagerPC::ManagerPC(std::size_t num_computers, std::uint32_t price_per_hour)
 
 bool ManagerPC::PC::is_used() const { return id.has_value(); }
 
-void ManagerPC::assign(std::size_t pc_id, user_id_t user_id, Time start_time) {
+void ManagerPC::assign(std::size_t pc_id, user_id_t user_id, utils::Time start_time) {
   if (pc_id >= computers_.size()) {
     throw std::runtime_error("bad pc");
   }
@@ -20,11 +20,11 @@ void ManagerPC::assign(std::size_t pc_id, user_id_t user_id, Time start_time) {
   ++used_pc_;
 }
 
-void ManagerPC::release(user_id_t user_id, Time end_time) {
+void ManagerPC::release(user_id_t user_id, utils::Time end_time) {
   for (std::size_t pc_id = 0; pc_id < computers_.size(); ++pc_id) {
     auto& pc = computers_[pc_id];
     if (pc.is_used() && pc.id == user_id) {
-      hour_t hours = duration(pc.start_time, end_time).get_hour();
+      utils::hour_t hours = duration(pc.start_time, end_time).get_hour();
       pc.result_revenue += hours * price_per_hour_;
       pc.result_tm += duration(pc.start_time, end_time);
       _clean_pc(pc_id);
@@ -43,7 +43,7 @@ std::size_t ManagerPC::get_free_pc() const {
   throw ErrorClub(ErrorCode::PlaceIsBusy);
 }
 
-std::pair<std::uint32_t, Time> ManagerPC::get_stats_pc(std::size_t pc_id) const {
+std::pair<std::uint32_t, utils::Time> ManagerPC::get_stats_pc(std::size_t pc_id) const {
   if (pc_id >= computers_.size()) {
     throw std::runtime_error("bad pc");
   } 
@@ -56,7 +56,7 @@ void ManagerPC::_clean_pc(std::size_t pc_id) {
   if (computers_[pc_id].is_used()) {
     --used_pc_;
   }
-  computers_[pc_id].start_time = Time();
+  computers_[pc_id].start_time = utils::Time();
   computers_[pc_id].id.reset();
 }
 

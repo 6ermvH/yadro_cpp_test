@@ -5,6 +5,8 @@
 
 #include "config.hpp"
 
+namespace utils {
+
 using hour_t = std::uint32_t;
 using minute_t = std::uint32_t;
 
@@ -36,5 +38,7 @@ class Time {
  private:
   minute_t minute_;
 };
+
+}
 
 #endif  // !TIME_HPP

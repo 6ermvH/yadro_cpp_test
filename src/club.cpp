@@ -9,26 +9,26 @@ namespace {
   }
 }
 
-Club::Club(std::size_t pc_count, std::uint32_t price_per_hour, Time start, Time end) 
+Club::Club(std::size_t pc_count, std::uint32_t price_per_hour, utils::Time start, utils::Time end) 
     : start_(start), 
       end_(end),
       manager_pc_(pc_count, price_per_hour) {}
 
-bool Club::is_correct_time(Time time) const {
+bool Club::is_correct_time(utils::Time time) const {
   if (time < start_ || time > end_) {
     return false;
   }
   return true;
 }
 
-void Club::add_user(Time time, const std::string& username) {
+void Club::add_user(utils::Time time, const std::string& username) {
   if (!is_correct_time(time)) {
     throw ErrorClub(ErrorCode::NotOpenYet);
   }
   manager_user_.add(username, generate_user_id(username));
 }
 
-void Club::use_user_pc(Time time, const std::string& username, std::size_t pc_id) {
+void Club::use_user_pc(utils::Time time, const std::string& username, std::size_t pc_id) {
   if (!is_correct_time(time)) {
     throw ErrorClub(ErrorCode::NotOpenYet);
   }
@@ -41,7 +41,7 @@ void Club::use_user_pc(Time time, const std::string& username, std::size_t pc_id
   manager_pc_.assign(pc_id, manager_user_.get_user_id(username), time);
 }
 
-void Club::add_user_wait(Time time, const std::string& username) {
+void Club::add_user_wait(utils::Time time, const std::string& username) {
   if (!is_correct_time(time)) {
     throw ErrorClub(ErrorCode::NotOpenYet);
   }
@@ -57,7 +57,7 @@ void Club::add_user_wait(Time time, const std::string& username) {
   manager_user_.wait(username);
 }
 
-void Club::remove_user(Time time, const std::string& username) {
+void Club::remove_user(utils::Time time, const std::string& username) {
   if (!is_correct_time(time)) {
     throw ErrorClub(ErrorCode::NotOpenYet);
   }
@@ -70,8 +70,8 @@ void Club::remove_user(Time time, const std::string& username) {
   manager_user_.remove(username);
 }
 
-const std::vector<std::pair<std::uint32_t, Time> > Club::get_revenue() const {
-  std::vector<std::pair<std::uint32_t, Time> > result;
+const std::vector<std::pair<std::uint32_t, utils::Time> > Club::get_revenue() const {
+  std::vector<std::pair<std::uint32_t, utils::Time> > result;
   for (std::size_t i = 0; i < manager_pc_.count_pc(); ++i) {
     result.push_back(manager_pc_.get_stats_pc(i));
   }

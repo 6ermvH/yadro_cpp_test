@@ -3,6 +3,8 @@
 #include <limits>
 #include <sstream>
 
+namespace utils {
+
 Time::Time(hour_t hour, minute_t minute) : minute_(minute + hour * 60) {}
 
 Time::Time(const std::string& time_str, const std::string& format) {
@@ -79,3 +81,4 @@ Time& Time::operator+=(Time tm) {
   return *this;
 }
 
+}
