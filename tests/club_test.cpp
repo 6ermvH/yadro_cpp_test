@@ -158,3 +158,38 @@ TEST(ClubBase, Stats) {
     EXPECT_EQ(club.get_revenue()[2].second.to_string(), "01:01");
   }
 }
+
+TEST(ClubBase, FreePC) {
+  Club club(2, 10, Time("09:00"), Time("21:00"));
+  club.add_user(Time("09:00"), "a");
+  club.add_user(Time("09:00"), "b");
+  EXPECT_TRUE(club.has_free_pc());
+  EXPECT_EQ(club.get_free_pc(), 0);
+  club.use_user_pc(Time("09:01"), "a", 0);
+  EXPECT_EQ(club.get_free_pc(), 1);
+  club.use_user_pc(Time("09:02"), "b", 1);
+  EXPECT_FALSE(club.has_free_pc());
+  EXPECT_THROW(club.get_free_pc(), ErrorClub);
+}
+
+TEST(ClubBase, WaitedQueue) {
+  Club club(1, 10, Time("09:00"), Time("21:00"));
+  club.add_user(Time("09:00"), "a");
+  club.add_user(Time("09:00"), "b");
+  club.use_user_pc(Time("09:01"), "a", 0);
+  club.add_user_wait(Time("09:02"), "b");
+
+  EXPECT_EQ(club.get_waited_user(), "b");
+  club.pop_waited_user();
+  EXPECT_EQ(club.get_waited_user(), "");
+}
+
+TEST(ClubBase, InvalidRemove) {
+  Club club(2, 10, Time("09:00"), Time("21:00"));
+  EXPECT_THROW(club.remove_user(Time("10:00"), "ghost"), ErrorClub);
+}
+
+TEST(ClubBase, UsePC_UnknownUser) {
+  Club club(2, 10, Time("09:00"), Time("21:00"));
+  EXPECT_THROW(club.use_user_pc(Time("10:00"), "ghost", 0), ErrorClub);
+}

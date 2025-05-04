@@ -17,6 +17,12 @@ public:
   void add_user_wait(Time time, const std::string& username);
   void remove_user(Time time, const std::string& username);
 
+  std::string get_waited_user() const;
+  void pop_waited_user();
+
+  bool has_free_pc() const;
+  std::size_t get_free_pc() const;
+
   const std::vector<std::pair<std::uint32_t, Time> > get_revenue() const;
 
 private:

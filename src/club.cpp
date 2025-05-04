@@ -77,3 +77,26 @@ const std::vector<std::pair<std::uint32_t, Time> > Club::get_revenue() const {
   }
   return result;
 }
+
+std::string Club::get_waited_user() const {
+  std::string username;
+  try {
+  user_id_t user_id = manager_user_.get_waited_user();
+  username = manager_user_.get_user_name(user_id);
+  } catch (const ErrorClub& e) {
+    username = "";
+  }
+  return username;
+}
+
+void Club::pop_waited_user() {
+  manager_user_.pop_waited_user();
+}
+
+std::size_t Club::get_free_pc() const {
+  return manager_pc_.get_free_pc(); 
+}
+
+bool Club::has_free_pc() const {
+  return manager_pc_.has_free_pc();
+}
