@@ -13,7 +13,7 @@ class Event {
   Event(std::shared_ptr<Club>, Time, std::size_t, const std::string&);
   virtual ~Event() = default;
 
-  virtual void handle() const = 0;
+  virtual std::unique_ptr<Event> handle() const = 0;
   virtual void print(std::ostream&) const = 0;
   friend std::ostream& operator<<(std::ostream&, const Event&);
 
@@ -27,7 +27,7 @@ class Event {
 class ClientComeIn : public Event {
  public:
   ClientComeIn(std::shared_ptr<Club>, Time, std::size_t, const std::string&);
-  void handle() const override;
+  std::unique_ptr<Event> handle() const override;
   void print(std::ostream&) const override;
 };
 
@@ -35,7 +35,7 @@ class ClientUsePC : public Event {
  public:
   ClientUsePC(std::shared_ptr<Club>, Time, std::size_t, const std::string&,
               std::size_t);
-  void handle() const override;
+  std::unique_ptr<Event> handle() const override;
   void print(std::ostream&) const override;
 
  private:
@@ -45,21 +45,21 @@ class ClientUsePC : public Event {
 class ClientWait : public Event {
  public:
   ClientWait(std::shared_ptr<Club>, Time, std::size_t, const std::string&);
-  void handle() const override;
+  std::unique_ptr<Event> handle() const override;
   void print(std::ostream&) const override;
 };
 
 class ClientLeave : public Event {
  public:
   ClientLeave(std::shared_ptr<Club>, Time, std::size_t, const std::string&);
-  void handle() const override;
+  std::unique_ptr<Event> handle() const override;
   void print(std::ostream&) const override;
 };
 
 class ErrorEvent : public Event {
  public:
   ErrorEvent(std::shared_ptr<Club>, Time, std::size_t, const std::string&);
-  void handle() const override;
+  std::unique_ptr<Event> handle() const override;
   void print(std::ostream&) const override;
 };
 
